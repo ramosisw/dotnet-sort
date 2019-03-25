@@ -1,5 +1,6 @@
 # dotnet-sort
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Source](https://img.shields.io/badge/Source-Github-purple.svg?style=flat-square)](https://github.com/ramosisw/dotnet-sort)
 
 A global .NET Core tool for ordering alphabetically, length, the references of packages or imports in your .NET Core and .NET Standard projects.
 
