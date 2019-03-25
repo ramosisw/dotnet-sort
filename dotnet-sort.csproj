@@ -7,6 +7,11 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-sort</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+        <None Include="LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
 
 </Project>
