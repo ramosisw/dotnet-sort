@@ -19,19 +19,16 @@ Usage:
 Options:
   -h, --help        Show command line help.
   -p, --path        Path where found the *.csproj or *.cs files (defaults to the current directory)
-  -s <APPLY>        Apply to references or imports.
+  -a <APPLY>        Apply to references or imports.
                     Examples:
-                    Sorting only references on *.csproj: -s=r
-                    Sorting only imports on *.cs: -s=i
-                    Sorting references and imports on *.cs: -s=ri
+                    Sorting references and imports on *.cs (default): -a=ri
+                    Sorting only references on *.csproj: -a=r
+                    Sorting only imports on *.cs: -a=i
 
-  -l <TYPE>         Sort by length
+  -s <MODE>         Sort by length/alphabetically
                     Examples:
-                    ascending (default): -l=a
-                    descendently: -l=d
-
-  -a <TYPE>         Sort alphabetically
-                    Examples: 
-                    ascending (default): -a=a
-                    descendently: -a=d
+                    alphabetically ascending (default): -s=a
+                    alphabetically descendently: -s=ad
+                    length ascending: -s=l
+                    length descendently: -s=ld
 ```

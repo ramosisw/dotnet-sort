@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace dotnet_sort
 {
@@ -9,47 +10,77 @@ namespace dotnet_sort
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Args [{0}]", String.Join(", ", args));
-            if (args.Length == 0 || args.Contains("-h") || args.Contains("--help"))
+            if (args.Contains("-h") || args.Contains("--help"))
             {
                 WriteHelp();
                 return;
             }
-            ValidateArgs(args);
+
+            try
+            {
+                var options = ParseArgs(args);
+                Console.WriteLine(options);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message + "\n");
+                WriteHelp();
+            }
         }
 
-        static void ValidateArgs(string[] args)
+
+        static Apply ParseArgs(string[] args)
         {
-            var programArgs = new List<ProgramArgs>{
-                new ProgramArgs(new []{"-h", "--help"}),
-                new ProgramArgs(new []{"-p", "--path"}),
-                new ProgramArgs(new []{"-s"}),
-                new ProgramArgs(new []{"-l"}),
-                new ProgramArgs(new []{"-a"})
-            };
-
-            //count args
-            foreach (var programArg in programArgs)
+            var validOptions = new[] { "-p", "--path", "-s", "-a" };
+            var options = new Apply();
+            foreach (var argItem in args)
             {
-                foreach (var arg in args)
+                var kv = argItem.Split("=");
+                if (!validOptions.Contains(kv[0])) throw new ArgumentException($"Unknown option {argItem}");
+                if (kv.Count() != 2) continue;
+                switch (kv[0])
                 {
-                    var keyValueArg = arg.Split('=');
-                    if (programArg.Keys.Contains(keyValueArg[0]))
-                    {
-                        programArg.Count++;
-                        if (programArg.Count == 1 && keyValueArg.Count() == 2)
+                    case "-p":
+                    case "--path":
+                        options.Path = kv[1];
+                        break;
+                    case "-a":
+                        switch (kv[1])
                         {
-                            programArg.Value = keyValueArg[1];
+                            case "r": options.To = ApplyEnum.REFERENCES; break;
+                            case "i": options.To = ApplyEnum.IMPORTS; break;
+                            case "ri":
+                            case "ir": options.To = ApplyEnum.REFERENCES_IMPORTS; break;
+                            default: throw new ArgumentException($"Unknown value to option -a={kv[1]}");
                         }
-                    }
+                        break;
+                    case "-s":
+                        switch (kv[1])
+                        {
+                            case "a": options.Sort = SortEnum.ALPHABETICALLY_ASCENDING; break;
+                            case "ad": options.Sort = SortEnum.ALPHABETICALLY_DESCENDENTLY; break;
+                            case "l": options.Sort = SortEnum.LENGTH_ASCENDING; break;
+                            case "ld": options.Sort = SortEnum.LENGTH_DESCENDENTLY; break;
+                            default: throw new ArgumentException($"Unknown value to option -l={kv[1]}");
+                        }
+                        break;
                 }
+
             }
 
-            Console.WriteLine("Found\n");
-            foreach (var programArg in programArgs)
-            {
-                Console.WriteLine("{0} {1} [{2}]", programArg.Count, programArg.Keys[0], programArg.Value);
-            }
+            options.Path = Path.GetFullPath(options.Path);
+
+            var isFile = File.Exists(options.Path);
+            var isDirectory = Directory.Exists(options.Path);
+
+            if (isFile && options.To == ApplyEnum.REFERENCES && !Path.GetExtension(options.Path).Equals(".csproj", StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException($"Only accept *.csproj files, actual {options.Path}.");
+            if (!isFile && !isDirectory)
+                throw new ArgumentException($"The path {options.Path} not found.");
+            if (isFile && options.To == ApplyEnum.REFERENCES_IMPORTS)
+                throw new ArgumentException($"The path {options.Path} is a file, expected directory.");
+
+            return options;
         }
 
         static void WriteHelp()
@@ -70,19 +101,16 @@ namespace dotnet_sort
             Console.WriteLine("  -p, --path        Path where found the *.csproj or *.cs files (defaults to the current directory).");
             Console.WriteLine("  -a <APPLY>        Apply to references or imports.");
             Console.WriteLine("                    Examples:");
-            Console.WriteLine("                    Sorting only references on *.csproj: -s=r");
-            Console.WriteLine("                    Sorting only imports on *.cs: -s=i");
-            Console.WriteLine("                    Sorting references and imports on *.cs: -s=ri");
+            Console.WriteLine("                    Sorting only references on *.csproj: -a=r");
+            Console.WriteLine("                    Sorting only imports on *.cs: -a=i");
+            Console.WriteLine("                    Sorting references and imports on *.cs: -a=ri");
             Console.WriteLine("");
-            Console.WriteLine("  -l <TYPE>         Sort by length");
+            Console.WriteLine("  -s <MODE>         Sort by length/alphabetically");
             Console.WriteLine("                    Examples:");
-            Console.WriteLine("                    ascending (default): -l=a");
-            Console.WriteLine("                    descendently: -l=d");
-            Console.WriteLine("");
-            Console.WriteLine("  -a <TYPE>         Sort alphabetically");
-            Console.WriteLine("                    Examples: ");
-            Console.WriteLine("                    ascending (default): -a=a");
-            Console.WriteLine("                    descendently: -a=d");
+            Console.WriteLine("                    alphabetically ascending (default): -s=a");
+            Console.WriteLine("                    alphabetically descendently: -s=ad");
+            Console.WriteLine("                    length ascending: -s=l");
+            Console.WriteLine("                    length descendently: -s=ld");
         }
     }
 }

@@ -2,7 +2,8 @@ namespace dotnet_sort
 {
     public enum ApplyEnum
     {
-        REFERENCES, 
+        REFERENCES_IMPORTS,
+        REFERENCES,
         IMPORTS
     }
 }
