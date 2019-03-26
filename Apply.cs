@@ -9,6 +9,7 @@ namespace dotnet_sort
             To = ApplyEnum.REFERENCES_IMPORTS;
         }
         public string Path { get; set; }
+        public bool PathIsFile { get; set; }
         public ApplyEnum To { get; set; }
         public SortEnum Sort { get; set; }
 

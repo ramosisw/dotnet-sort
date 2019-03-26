@@ -1,8 +1,9 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace dotnet_sort
 {
@@ -20,6 +21,16 @@ namespace dotnet_sort
             {
                 var options = ParseArgs(args);
                 Console.WriteLine(options);
+
+                if (options.To == ApplyEnum.IMPORTS || options.To == ApplyEnum.REFERENCES_IMPORTS)
+                {
+                    //localize all *.cs files
+                    var files = Directory.GetFiles(options.Path, "*.cs", SearchOption.AllDirectories);
+                    foreach (var file in files)
+                    {
+                        SortImports(file, options.Sort);
+                    }
+                }
             }
             catch (ArgumentException ex)
             {
@@ -28,8 +39,48 @@ namespace dotnet_sort
             }
         }
 
+        private static void SortImports(string filePath, SortEnum sort)
+        {
+            Console.Write($"Sorting.. {filePath}");
+            Console.WriteLine("\t done");
+            var file = new StreamReader(filePath);
+            var linesToSort = new List<string>();
+            var restOfFile = "";
 
-        static Apply ParseArgs(string[] args)
+            string line;
+            string pattern = @"^using.*;";
+            while ((line = file.ReadLine()) != null && Regex.Match(line, pattern).Success)
+            {
+                linesToSort.Add(line);
+            }
+
+            restOfFile = file.ReadToEnd();
+            file.Close();
+
+            switch (sort)
+            {
+                case SortEnum.ALPHABETICALLY_ASCENDING:
+                    linesToSort = linesToSort.OrderBy(x => x).ToList(); break;
+                case SortEnum.ALPHABETICALLY_DESCENDENTLY:
+                    linesToSort = linesToSort.OrderByDescending(x => x).ToList(); break;
+                case SortEnum.LENGTH_ASCENDING:
+                    linesToSort = linesToSort.OrderBy(x => x.Length).ToList(); break;
+                case SortEnum.LENGTH_DESCENDENTLY:
+                    linesToSort = linesToSort.OrderByDescending(x => x.Length).ToList(); break;
+            }
+            //Write lines
+
+            using (StreamWriter writer = new System.IO.StreamWriter(filePath))
+            {
+                foreach (var strLine in linesToSort)
+                    writer.WriteLine(strLine);
+                writer.WriteLine(" ");
+                writer.Write(restOfFile);
+                writer.Close();
+            }
+        }
+
+        private static Apply ParseArgs(string[] args)
         {
             var validOptions = new[] { "-p", "--path", "-s", "-a" };
             var options = new Apply();
@@ -80,10 +131,11 @@ namespace dotnet_sort
             if (isFile && options.To == ApplyEnum.REFERENCES_IMPORTS)
                 throw new ArgumentException($"The path {options.Path} is a file, expected directory.");
 
+            options.PathIsFile = isFile;
             return options;
         }
 
-        static void WriteHelp()
+        private static void WriteHelp()
         {
             var versionString = Assembly.GetEntryAssembly()
                                         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
