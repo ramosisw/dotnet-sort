@@ -2,11 +2,32 @@
   <PropertyGroup>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Title>dotnet-sort</Title>
+    <Summary>Usage:
+  dotnet-sort [options]
+
+Options:
+  -h, --help        Show command line help.
+  -p, --path        Path where found the *.csproj or *.cs files (defaults to the current directory)
+  -a &gt;APPLY>        Apply to references or imports.
+                    Examples:
+                    Sorting references and imports on *.cs (default): -a=ri
+                    Sorting only references on *.csproj: -a=r
+                    Sorting only imports on *.cs: -a=i
+
+  -s &gt;MODE>         Sort by length/alphabetically
+                    Examples:
+                    alphabetically ascending (default): -s=a
+                    alphabetically descendently: -s=ad
+                    length ascending: -s=l
+                    length descendently: -s=ld</Summary>
+    <Description>A global .NET Core tool for ordering alphabetically, length, the references of packages or imports in your .NET Core and .NET Standard projects.</Description>
+    <Authors>Julio C. Ramosdo</Authors>
     <RootNamespace>dotnet_sort</RootNamespace>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-sort</ToolCommandName>
