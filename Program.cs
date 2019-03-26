@@ -24,8 +24,8 @@ namespace dotnet_sort
                 new ProgramArgs(new []{"-h", "--help"}),
                 new ProgramArgs(new []{"-p", "--path"}),
                 new ProgramArgs(new []{"-s"}),
-                new ProgramArgs(new []{"-l", "+l"}),
-                new ProgramArgs(new []{"-a", "+a"})
+                new ProgramArgs(new []{"-l"}),
+                new ProgramArgs(new []{"-a"})
             };
 
             //count args
