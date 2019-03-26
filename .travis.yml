@@ -3,7 +3,6 @@ language: csharp
 mono: none
 
 script:
-  - cd dotnet-sort
   - dotnet build
 
 notifications:
