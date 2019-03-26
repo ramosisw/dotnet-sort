@@ -38,6 +38,9 @@ Options:
 # Examples
 
 ## Command to sort references `-a=r` alphabetically ascending `-s=a`
+```sh
+dotnet-sort -path=Project.csproj -a=r -s=a
+```
 `Project.csproj`
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
