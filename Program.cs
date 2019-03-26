@@ -74,7 +74,6 @@ namespace dotnet_sort
             {
                 foreach (var strLine in linesToSort)
                     writer.WriteLine(strLine);
-                writer.WriteLine(" ");
                 writer.Write(restOfFile);
                 writer.Close();
             }
