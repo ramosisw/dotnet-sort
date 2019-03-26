@@ -1,4 +1,5 @@
 # dotnet-sort
+[![Build Status](https://img.shields.io/travis/ramosisw/dotnet-sort/master.svg?style=flat-square)](https://travis-ci.org/ramosisw/dotnet-sort)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/ramosisw/dotnet-sort/blob/master/LICENSE)
 [![Source](https://img.shields.io/badge/Source-Github-purple.svg?style=flat-square)](https://github.com/ramosisw/dotnet-sort)
 
