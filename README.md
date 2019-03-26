@@ -39,7 +39,7 @@ Options:
 
 ## Command to sort references `-a=r` alphabetically ascending `-s=a`
 ```sh
-dotnet-sort -path=Project.csproj -a=r -s=a
+dotnet-sort --path=Project.csproj -a=r -s=a
 ```
 `Project.csproj`
 ```xml
@@ -63,7 +63,7 @@ dotnet-sort -path=Project.csproj -a=r -s=a
 
 ## Command to sort imports `-a=i` by length descendently `-s=ld`
 ```sh
-dotnet-sort -path=Code.cs -a=i -s=ld
+dotnet-sort --path=Code.cs -a=i -s=ld
 ```
 
 `Code.cs`
@@ -86,7 +86,7 @@ using System;
 
 ## Command to sort imports `-a=i` by length ascending `-s=la`
 ```sh
-dotnet-sort -path=Code.cs -a=i -s=ld
+dotnet-sort --path=Code.cs -a=i -s=ld
 ```
 
 `Code.cs`
