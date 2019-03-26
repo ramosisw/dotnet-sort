@@ -1,9 +1,13 @@
-using System.Reflection;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using System.Xml.Xsl;
+using System.Xml;
+using System;
 
 namespace dotnet_sort
 {
@@ -21,15 +25,24 @@ namespace dotnet_sort
             {
                 var options = ParseArgs(args);
                 Console.WriteLine(options);
+                var codeFiles = new string[] { };
+                var projectFiles = new string[] { };
 
                 if (options.To == ApplyEnum.IMPORTS || options.To == ApplyEnum.REFERENCES_IMPORTS)
+                    codeFiles = options.PathIsFile ? new[] { options.Path } : Directory.GetFiles(options.Path, "*.cs", SearchOption.AllDirectories);
+
+                if (options.To == ApplyEnum.REFERENCES || options.To == ApplyEnum.REFERENCES_IMPORTS)
+                    projectFiles = options.PathIsFile ? new[] { options.Path } : Directory.GetFiles(options.Path, "*.csproj", SearchOption.AllDirectories);
+
+                foreach (var codeFile in codeFiles)
                 {
-                    //localize all *.cs files
-                    var files = options.PathIsFile ? new[] { options.Path } : Directory.GetFiles(options.Path, "*.cs", SearchOption.AllDirectories);
-                    foreach (var file in files)
-                    {
-                        SortImports(file, options.Sort);
-                    }
+                    SortImports(codeFile, options.Sort);
+                }
+
+                var xslt = GetCompiledTransform(options.Sort);
+                foreach (var projectFile in projectFiles)
+                {
+                    SortReferences(projectFile, xslt);
                 }
             }
             catch (ArgumentException ex)
@@ -39,10 +52,44 @@ namespace dotnet_sort
             }
         }
 
+        private static XslCompiledTransform GetCompiledTransform(SortEnum sort)
+        {
+            string xsltFile = "";
+            switch (sort)
+            {
+                case SortEnum.ALPHABETICALLY_ASCENDING: xsltFile = "Sort-a.xsl"; break;
+                case SortEnum.ALPHABETICALLY_DESCENDENTLY: xsltFile = "Sort-ad.xsl"; break;
+                case SortEnum.LENGTH_ASCENDING: xsltFile = "Sort-l.xsl"; break;
+                case SortEnum.LENGTH_DESCENDENTLY: xsltFile = "Sort-ld.xsl"; break;
+            }
+            var xslt = new XslCompiledTransform();
+            var assembly = Assembly.GetExecutingAssembly();
+            using (var stream = assembly.GetManifestResourceStream("dotnet_sort." + xsltFile))
+            {
+                using (var reader = XmlReader.Create(stream))
+                {
+
+                    xslt.Load(reader);
+                    return xslt;
+                }
+            }
+        }
+
+        private static void SortReferences(string filePath, XslCompiledTransform xslt)
+        {
+            Console.Write($"Sorting.. {filePath}");
+            using (StringWriter sw = new StringWriter())
+            {
+                var doc = XDocument.Parse(System.IO.File.ReadAllText(filePath));
+                xslt.Transform(doc.CreateNavigator(), null, sw);
+                File.WriteAllText(filePath, sw.ToString());
+            }
+            Console.WriteLine("\t done");
+        }
+
         private static void SortImports(string filePath, SortEnum sort)
         {
             Console.Write($"Sorting.. {filePath}");
-            Console.WriteLine("\t done");
             var file = new StreamReader(filePath);
             var linesToSort = new List<string>();
             var restOfFile = "";
@@ -77,6 +124,7 @@ namespace dotnet_sort
                 writer.Write(restOfFile);
                 writer.Close();
             }
+            Console.WriteLine("\t done");
         }
 
         private static Apply ParseArgs(string[] args)

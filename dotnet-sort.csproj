@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Version>1.0.1</Version>
   </PropertyGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -17,9 +15,19 @@
     <RepositoryUrl>https://github.com/ramosisw/dotnet-sort.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-
   <ItemGroup>
-    <None Include="LICENSE" Pack="true" PackagePath=""/>
+    <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
-
+  <ItemGroup>
+    <EmbeddedResource Include="Sort-a.xsl" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sort-ad.xsl" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sort-l.xsl" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sort-ld.xsl" Pack="true" PackagePath="" />
+  </ItemGroup>
 </Project>
