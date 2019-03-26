@@ -34,3 +34,91 @@ Options:
                     length ascending: -s=l
                     length descendently: -s=ld
 ```
+
+# Examples
+
+## Command to sort references `-a=r` alphabetically ascending `-s=a`
+`Project.csproj`
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Grpc" Version="1.19.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.7.0" />
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.7.0" />
+  </ItemGroup>
+</Project>
+```
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.7.0" />
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.7.0" />
+    <PackageReference Include="Grpc" Version="1.19.0" />
+  </ItemGroup>
+</Project>
+```
+
+## Command to sort imports `-a=i` by length descendently `-s=ld`
+```sh
+dotnet-sort -path=Code.cs -a=i -s=ld
+```
+
+`Code.cs`
+```cs
+using System.Text.RegularExpressions;     
+using System.Linq;                        
+using System;                             
+using System.IO;                          
+using System.Text;                        
+using System.Xml.XPath;                   
+```
+```cs
+using System.Text.RegularExpressions;
+using System.Xml.XPath;
+using System.Text;
+using System.Linq;
+using System.IO;
+using System;
+```
+
+## Command to sort imports `-a=i` by length ascending `-s=la`
+```sh
+dotnet-sort -path=Code.cs -a=i -s=ld
+```
+
+`Code.cs`
+```cs
+using System.Text.RegularExpressions;     
+using System.Linq;                        
+using System;                             
+using System.IO;                          
+using System.Text;                        
+using System.Xml.XPath;                   
+```
+```cs
+using System;
+using System.IO;
+using System.Text;
+using System.Linq;
+using System.Xml.XPath;
+using System.Text.RegularExpressions;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
