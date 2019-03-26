@@ -54,7 +54,7 @@ namespace dotnet_sort
                 linesToSort.Add(line);
             }
 
-            restOfFile = file.ReadToEnd();
+            restOfFile = line + file.ReadToEnd();
             file.Close();
 
             switch (sort)
