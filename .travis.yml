@@ -5,3 +5,6 @@ mono: none
 script:
  - dotnet restore
  - dotnet build
+
+ notifications:
+  email: false
