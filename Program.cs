@@ -25,7 +25,7 @@ namespace dotnet_sort
                 if (options.To == ApplyEnum.IMPORTS || options.To == ApplyEnum.REFERENCES_IMPORTS)
                 {
                     //localize all *.cs files
-                    var files = Directory.GetFiles(options.Path, "*.cs", SearchOption.AllDirectories);
+                    var files = options.PathIsFile ? new[] { options.Path } : Directory.GetFiles(options.Path, "*.cs", SearchOption.AllDirectories);
                     foreach (var file in files)
                     {
                         SortImports(file, options.Sort);
@@ -54,7 +54,7 @@ namespace dotnet_sort
                 linesToSort.Add(line);
             }
 
-            restOfFile = line + file.ReadToEnd();
+            restOfFile = line + "\r\n" + file.ReadToEnd();
             file.Close();
 
             switch (sort)
