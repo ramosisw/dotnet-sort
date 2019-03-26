@@ -1,13 +1,14 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Xml.XPath;
+using System.Xml.Linq;
 using System.Xml.Xsl;
+using System.Linq;
 using System.Xml;
+using System.IO;
 using System;
+using System.Text;
 
 namespace dotnet_sort
 {
@@ -90,7 +91,7 @@ namespace dotnet_sort
         private static void SortImports(string filePath, SortEnum sort)
         {
             Console.Write($"Sorting.. {filePath}");
-            var file = new StreamReader(filePath);
+            var file = new StreamReader(filePath, Encoding.UTF8);
             var linesToSort = new List<string>();
             var restOfFile = "";
 
@@ -99,6 +100,11 @@ namespace dotnet_sort
             while ((line = file.ReadLine()) != null && Regex.Match(line, pattern).Success)
             {
                 linesToSort.Add(line);
+            }
+            if(linesToSort.Count == 0) {
+
+                Console.WriteLine("\t not necessary");
+                return;
             }
 
             restOfFile = line + "\r\n" + file.ReadToEnd();
@@ -117,7 +123,7 @@ namespace dotnet_sort
             }
             //Write lines
 
-            using (StreamWriter writer = new System.IO.StreamWriter(filePath))
+            using (StreamWriter writer = new System.IO.StreamWriter(filePath, false, Encoding.UTF8))
             {
                 foreach (var strLine in linesToSort)
                     writer.WriteLine(strLine);

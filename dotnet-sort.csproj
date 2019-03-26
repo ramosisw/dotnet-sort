@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -20,14 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sort-a.xsl" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Sort-ad.xsl" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Sort-l.xsl" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Sort-ld.xsl" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
