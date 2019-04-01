@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/ramosisw/dotnet-sort/blob/master/LICENSE)
 [![Source](https://img.shields.io/badge/Source-Github-purple.svg?style=flat-square)](https://github.com/ramosisw/dotnet-sort)
 [![NuGet Version](https://badgen.net/nuget/v/dotnet-sort)](https://www.nuget.org/packages/dotnet-sort/)
-[![NuGet Download](https://img.shields.io/nuget/dt/dotnet-gtests.svg)](https://www.nuget.org/packages/dotnet-sort/)
+[![NuGet Download](https://img.shields.io/nuget/dt/dotnet-sort.svg)](https://www.nuget.org/packages/dotnet-sort/)
 
 A global .NET Core tool for ordering alphabetically, length, the references of packages or imports in your .NET Core and .NET Standard projects.
 
