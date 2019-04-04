@@ -1,8 +1,8 @@
 # dotnet-sort
-[![Build Status](https://img.shields.io/travis/ramosisw/dotnet-sort/master.svg?style=flat-square)](https://travis-ci.org/ramosisw/dotnet-sort)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/ramosisw/dotnet-sort/blob/master/LICENSE)
-[![NuGet Version](https://img.shields.io/nuget/v/dotnet-sort.svg?style=flat-square)](https://www.nuget.org/packages/dotnet-sort/)
-[![NuGet Download](https://img.shields.io/nuget/dt/dotnet-sort.svg?style=flat-square)](https://www.nuget.org/packages/dotnet-sort/)
+[![Build Status](https://img.shields.io/travis/ramosisw/dotnet-sort/master.svg?style=flat-square&logo=travis)](https://travis-ci.org/ramosisw/dotnet-sort)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&logo=read-the-docs)](https://github.com/ramosisw/dotnet-sort/blob/master/LICENSE)
+[![NuGet Version](https://img.shields.io/nuget/v/dotnet-sort.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/dotnet-sort/)
+[![NuGet Download](https://img.shields.io/nuget/dt/dotnet-sort.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/dotnet-sort/)
 
 A global .NET Core tool for ordering alphabetically, length, the references of packages or imports in your .NET Core and .NET Standard projects.
 
