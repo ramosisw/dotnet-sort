@@ -1,9 +1,0 @@
-os: windows
-language: csharp
-mono: none
-
-script:
-  - dotnet build
-
-notifications:
-  email: false
