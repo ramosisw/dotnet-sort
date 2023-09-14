@@ -9,24 +9,25 @@
     <TargetFramework>net6.0</TargetFramework>
     <Title>dotnet-sort</Title>
     <Summary>Usage:
-  dotnet-sort [options]
+      dotnet-sort [options]
 
-Options:
-  -h, --help        Show command line help.
-  -p, --path        Path where found the *.csproj or *.cs files (defaults to the current directory)
-  -a &gt;APPLY>        Apply to references or imports.
-                    Examples:
-                    Sorting references and imports on *.cs (default): -a=ri
-                    Sorting only references on *.csproj: -a=r
-                    Sorting only imports on *.cs: -a=i
+      Options:
+      -h, --help Show command line help.
+      -p, --path Path where found the *.csproj or *.cs files (defaults to the current directory)
+      -a &gt;APPLY> Apply to references or imports.
+      Examples:
+      Sorting references and imports on *.cs (default): -a=ri
+      Sorting only references on *.csproj: -a=r
+      Sorting only imports on *.cs: -a=i
 
-  -s &gt;MODE>         Sort by length/alphabetically
-                    Examples:
-                    alphabetically ascending (default): -s=a
-                    alphabetically descendently: -s=ad
-                    length ascending: -s=l
-                    length descendently: -s=ld</Summary>
-    <Description>A global .NET Core tool for ordering alphabetically, length, the references of packages or imports in your .NET Core and .NET Standard projects.</Description>
+      -s &gt;MODE> Sort by length/alphabetically
+      Examples:
+      alphabetically ascending (default): -s=a
+      alphabetically descendently: -s=ad
+      length ascending: -s=l
+      length descendently: -s=ld</Summary>
+    <Description>A global .NET Core tool for ordering alphabetically, length, the references of
+      packages or imports in your .NET Core and .NET Standard projects.</Description>
     <Authors>Julio C. Ramos</Authors>
     <RootNamespace>dotnet_sort</RootNamespace>
     <PackAsTool>true</PackAsTool>
@@ -35,11 +36,13 @@ Options:
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/ramosisw/dotnet-sort.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
     <EmbeddedResource Include="Sort-a.xsl" Pack="true" PackagePath="" />
     <EmbeddedResource Include="Sort-ad.xsl" Pack="true" PackagePath="" />
     <EmbeddedResource Include="Sort-l.xsl" Pack="true" PackagePath="" />
